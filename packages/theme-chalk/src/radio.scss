@@ -1,0 +1,79 @@
+@use 'common/var.scss' as *;
+@use 'mixins/mixins' as *;
+@use 'mixins/config' as *;
+
+@include b(radio) {
+  position: relative;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  outline: none;
+  user-select: none;
+  margin-right: 32px;
+
+  &__input {
+    @include when(checked) {
+      .h-radio__inner {
+        background-color: $color-primary;
+
+        &::after {
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+    }
+  }
+
+  &__input {
+    white-space: nowrap;
+    cursor: pointer;
+    outline: none;
+    display: inline-flex;
+    position: relative;
+    vertical-align: middle;
+  }
+
+  &__label {
+    padding-left: 8px;
+  }
+
+  &__inner {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: $color-info;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    box-sizing: border-box;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: #fff;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(0);
+    }
+  }
+
+  &__original {
+    opacity: 0;
+    outline: none;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+  }
+}
+
+@include b(radio-group) {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+}

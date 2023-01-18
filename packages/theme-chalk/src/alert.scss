@@ -1,0 +1,45 @@
+@use 'common/var.scss' as *;
+@use 'mixins/mixins' as *;
+@use 'mixins/config' as *;
+
+@include b(alert) {
+  width: 100%;
+  padding: 4px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  position: relative;
+  color: #fff;
+
+  @include when(light) {
+  }
+
+  &__close-btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+
+  &__description {
+    padding: 10px 0;
+  }
+
+  .h-alert__title {
+    font-size: $font-size-mini;
+  }
+}
+.h-alert--primary {
+  background-color: $color-primary;
+}
+.h-alert--success {
+  background-color: $color-success;
+}
+.h-alert--danger {
+  background-color: $color-danger;
+}
+.h-alert--warning {
+  background-color: $color-warning;
+}
+.h-alert--info {
+  background-color: $color-info;
+}

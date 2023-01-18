@@ -1,0 +1,6 @@
+{
+  "name": "@h-ui/constants",
+  "private": true,
+  "license": "MIT",
+  "main": "index.ts"
+}
