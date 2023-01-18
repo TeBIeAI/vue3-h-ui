@@ -1,0 +1,97 @@
+@use 'common/var.scss' as *;
+@use 'mixins/mixins' as *;
+@use 'mixins/config' as *;
+
+@include b(checkbox) {
+  color: #666;
+  font-size: 14px;
+  position: relative;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  user-select: none;
+  margin-right: 30px;
+  height: 32px;
+
+  @include when(checked) {
+    .#{$namespace}-checkbox__label {
+      color: #409eff;
+    }
+  }
+
+  @include when(disabled) {
+    .#{$namespace}-checkbox__inner {
+      background-color: #ccc;
+      border: 1px solid #dcdfe6;
+    }
+
+    &.is-checked {
+      .#{$namespace}-checkbox__inner {
+        background-color: #5d99d6;
+        border: 1px solid #dcdfe6;
+
+        &::after {
+          border-color: getCssVar('checkbox-disabled-checked-icon-color');
+        }
+      }
+    }
+  }
+
+  @include e(input) {
+    white-space: nowrap;
+    cursor: pointer;
+    outline: none;
+    display: inline-flex;
+    position: relative;
+
+    @include when(checked) {
+      .#{$namespace}-checkbox__inner {
+        background-color: #409eff;
+      }
+    }
+  }
+
+  @include e(inner) {
+    display: inline-flex;
+    position: relative;
+    border: 1px solid #ddd;
+    width: 14px;
+    height: 14px;
+    background-color: #fff;
+    z-index: 1;
+    border-radius: 2px;
+    box-sizing: border-box;
+
+    &::after {
+      box-sizing: content-box;
+      content: '';
+      border: 1px solid #111;
+      border-left: 0;
+      border-top: 0;
+      left: 4px;
+      position: absolute;
+      top: 1px;
+      width: 3px;
+      transform: rotate(45deg) scaleY(0);
+      transition: transform 0.15s ease-in 0.05s;
+      transform-origin: center;
+    }
+  }
+
+  @include e(original) {
+    opacity: 0;
+    outline: none;
+    position: absolute;
+    margin: 0;
+    width: 0;
+    height: 0;
+    z-index: -1;
+  }
+
+  @include e(label) {
+    display: inline-block;
+    padding-left: 8px;
+    line-height: 1;
+  }
+}

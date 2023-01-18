@@ -6,7 +6,9 @@
   "main": "index.js",
   "scripts": {
     "i": "pnpm install",
-    "dev": "pnpm -C play dev"
+    "dev": "pnpm -C play dev",
+    "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
+    "format": "prettier --write --cache ."
   },
   "keywords": [],
   "author": "",
@@ -27,6 +29,9 @@
     "@typescript-eslint/parser": "^5.47.1",
     "@vue/eslint-config-typescript": "^11.0.2",
     "eslint": "^8.31.0",
-    "eslint-plugin-vue": "^9.8.0"
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vue": "^9.8.0",
+    "prettier": "^2.8.3"
   }
 }

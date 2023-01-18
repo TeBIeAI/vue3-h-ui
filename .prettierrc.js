@@ -5,5 +5,6 @@ module.exports = {
   singleQuote: true, // 是否使用单引号
   bracketSpacing: true, // 是否在对象属性添加空格
   trailingComma: 'none', // 去除对象最末尾元素跟随的逗号
-  proseWrap: 'always' // 当超出print width（上面有这个参数）时就折行
+  proseWrap: 'always', // 当超出print width（上面有这个参数）时就折行
+  jsxSingleQuote: true // 在JSX中是否使用单引号
 }

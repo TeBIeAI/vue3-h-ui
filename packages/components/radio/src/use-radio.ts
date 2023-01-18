@@ -16,7 +16,7 @@ export const useRadio = (
   const isGroup = computed(() => !!radioGroup)
   const modelValue = computed<RadioProps['modelValue']>({
     get() {
-      return isGroup.value ? radioGroup?.modelValue : props.modelValue
+      return isGroup.value ? radioGroup!.modelValue : props.modelValue!
     },
     set(val) {
       if (isGroup.value) {

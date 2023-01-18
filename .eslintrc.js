@@ -9,13 +9,16 @@ module.exports = {
     es2021: true,
     node: true
   },
+  plugins: ['@typescript-eslint', 'prettier'],
   extends: [
     'eslint:recommended',
     'plugin:vue/vue3-recommended',
     'plugin:@typescript-eslint/recommended',
-    '@vue/typescript/recommended'
+    'plugin:prettier/recommended',
+    '@vue/typescript/recommended',
+    'prettier'
   ],
-
+  // 插件新增prettier
   parserOptions: {
     ecmaVersion: 'latest',
     parser: '@typescript-eslint/parser',
@@ -29,10 +32,10 @@ module.exports = {
   // plugins: ['vue', '@typescript-eslint'],
   rules: {
     'no-var': ERROR,
-    'no-undef': OFF,
     'vue/multi-word-component-names': OFF,
     '@typescript-eslint/no-extra-semi': OFF,
     'vue/html-self-closing': OFF,
-    '@typescript-eslint/no-non-null-assertion': OFF
+    '@typescript-eslint/no-non-null-assertion': OFF,
+    '@typescript-eslint/no-empty-function': WARNING
   }
 }

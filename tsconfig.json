@@ -3,14 +3,14 @@
     "lib": ["ESNext", "DOM"],
     "jsx": "preserve" /* Specify what JSX code is generated. */,
     "moduleResolution": "node",
-    "declaration": false,
     "sourceMap": true,
     "removeComments": true /* Disable emitting comments. */,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitAny": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "composite": true
   },
   "include": ["play/src/**/*", "typings/components.d.ts", "packages"],
   "exclude": ["node_module", "dist/**"]

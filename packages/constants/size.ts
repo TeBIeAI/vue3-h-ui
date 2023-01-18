@@ -1,6 +1,6 @@
 export const componentSize = ['', 'default', 'small', 'large'] as const
 
-export type ComponentSize = typeof componentSize[number]
+export type ComponentSize = (typeof componentSize)[number]
 
 export const componentSizeMap = {
   large: 40,
