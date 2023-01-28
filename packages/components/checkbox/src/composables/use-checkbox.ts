@@ -12,8 +12,10 @@ const setStoreValue = (
 
 export const useCheckbox = (props: CheckboxProps) => {
   const { modelValue } = useCheckboxModel(props)
-  const { isChecked } = useCheckboxStatus(props)
+  const { isChecked } = useCheckboxStatus(props, { modelValue })
   const { isDisabled } = useCheckboxDisabled({ modelValue, isChecked })
+
+  setStoreValue(props, { modelValue })
 
   return { modelValue, isChecked, isDisabled }
 }

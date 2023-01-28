@@ -12,6 +12,5 @@ export const useSizeProps = {
 
 export const useDisabled = (fallback?: MaybeRef<boolean | undefined>) => {
   const disabled = useProp<boolean>('disabled')
-  debugger
   return computed(() => disabled.value || unref(fallback) || false)
 }

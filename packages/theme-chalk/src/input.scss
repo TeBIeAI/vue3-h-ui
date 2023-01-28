@@ -1,0 +1,164 @@
+@use 'sass:map';
+
+@use 'common/var.scss' as *;
+@use 'mixins/mixins' as *;
+@use 'mixins/config' as *;
+
+@include b(input) {
+  position: relative;
+  font-size: var(--h-font-size-base);
+  display: inline-flex;
+  width: 100%;
+  box-sizing: border-box;
+  vertical-align: middle;
+  height: var(--h-component-size);
+
+  @each $slot in (prefix, suffix) {
+    @include e($slot) {
+      display: inline-flex;
+      white-space: nowrap;
+      flex-shrink: 0;
+      flex-wrap: nowrap;
+      height: 100%;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    @include e(#{$slot}-inner) {
+      pointer-events: all;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      &:hover {
+        cursor: pointer;
+      }
+
+      @if $slot == prefix {
+        > :last-child {
+          margin-right: 8px;
+        }
+
+        > :first-child {
+          &,
+          &.#{$namespace}-input__icon {
+            margin-left: 0;
+          }
+        }
+      } @else {
+        > :first-child {
+          margin-left: 8px;
+        }
+      }
+    }
+  }
+
+  @include e(wrapper) {
+    display: inline-flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--h-border-radius-base);
+    padding: 1px 11px;
+    box-shadow: 0 0 0 1px var(--h-border-color, var(--h-border-color)) inset;
+
+    @include when(focus) {
+      & {
+        box-shadow: 0 0 0 1px var(--h-color-primary, var(---h-color-primary))
+          inset;
+      }
+    }
+  }
+
+  @include e(inner) {
+    width: 100%;
+    flex-grow: 1;
+    font-size: inherit;
+    height: calc(var(--h-component-size) - 2px);
+    line-height: calc(var(--h-component-size) - 2px);
+    padding: 0;
+    outline: none;
+    border: none;
+    background: none;
+    box-sizing: border-box;
+    color: var(--h-text-color-regular);
+  }
+
+  @include when(disabled) {
+    cursor: not-allowed;
+
+    .#{$namespace}-input__wrapper {
+      background-color: var(--h-fill-color-light);
+    }
+
+    .#{$namespace}-input__inner {
+      cursor: not-allowed;
+      color: var(--h-text-color-placeholder);
+    }
+  }
+}
+
+@include b(input-group) {
+  display: inline-flex;
+  width: 100%;
+  align-items: center;
+
+  @include e((append, prepend)) {
+    background-color: var(--h-fill-color-light);
+    color: var(--h-color-info);
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+    border-radius: var(--h-border-radius-base);
+    padding: 0 20px;
+    white-space: nowrap;
+  }
+
+  @include e(append) {
+    border-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    box-shadow: 0 1px 0 0 var(--h-border-color) inset,
+      0 -1px 0 0 var(--h-border-color) inset,
+      -1px 0 0 0 var(--h-border-color) inset;
+  }
+
+  @include m(append) {
+    > .#{$namespace}-input__wrapper {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    @include e(append) {
+      .#{$namespace}-select {
+        .#{$namespace}-input {
+          .#{$namespace}-input__inner {
+            box-shadow: none !important;
+          }
+          .#{$namespace}-input__wrapper {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+          }
+          &.is-focus {
+            .#{$namespace}-input__inner {
+              box-shadow: none !important;
+            }
+            .#{$namespace}-input__wrapper {
+              z-index: 2;
+            }
+          }
+        }
+        &:hover {
+          .#{$namespace}-input__inner {
+            box-shadow: none !important;
+          }
+          .#{$namespace}-input__wrapper {
+            z-index: 1;
+          }
+        }
+      }
+    }
+  }
+}

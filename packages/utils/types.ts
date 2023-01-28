@@ -10,6 +10,14 @@ export const isString = (val: unknown): val is string => typeof val === 'string'
 
 export const isNumber = (val: unknown): val is number => typeof val === 'number'
 
-export const isArray = (value: unknown) => Array.isArray(value)
+export const isArray = (val: any): val is any[] => Array.isArray(val)
 
 export const isBoolean = (val: unknown) => typeof val === 'boolean'
+
+export const isUndefined = (val: unknown): val is undefined => val === undefined
+
+export const mutable = <T extends readonly any[] | Record<string, unknown>>(
+  val: T
+) => val as Mutable<typeof val>
+
+export type Mutable<T> = { -readonly [P in keyof T]: T[P] }

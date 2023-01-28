@@ -12,6 +12,8 @@
         v-model="modelValue"
         :value="label"
         :disabled="isDisabled"
+        :name="name"
+        :tabindex="tabindex"
         type="checkbox"
         :class="[ns.e('original')]"
       />
@@ -34,6 +36,8 @@ const props = defineProps(checkboxProps)
 const emits = defineEmits(checkboxEmits)
 
 const { modelValue, isChecked, isDisabled } = useCheckbox(props)
+
+console.log(modelValue)
 const ns = createNameSpace('checkbox')
 </script>
 

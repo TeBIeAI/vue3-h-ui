@@ -1,3 +1,7 @@
 export * from './alert'
 export * from './checkbox'
 export * from './radio'
+export * from './input'
+export * from './icon'
+export * from './select'
+export * from './popper'

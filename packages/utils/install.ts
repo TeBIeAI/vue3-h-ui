@@ -17,7 +17,6 @@ export const withInstall = <T, E extends Record<string, any>>(
       ;(main as any)[key] = comp
     }
   }
-
   return main as SFCWithInstall<T>
 }
 

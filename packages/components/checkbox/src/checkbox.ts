@@ -23,7 +23,6 @@ export const checkboxProps = {
   /**
    * @description whether the Checkbox is disabled
    */
-  disabled: Boolean,
   /**
    * @description if the Checkbox is checked
    */
@@ -56,6 +55,7 @@ export const checkboxProps = {
     type: String,
     default: undefined
   },
+  disabled: Boolean,
   /**
    * @description size of the Checkbox
    */

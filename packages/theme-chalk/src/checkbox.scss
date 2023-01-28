@@ -26,6 +26,11 @@
       border: 1px solid #dcdfe6;
     }
 
+    .#{$namespace}-checkbox__label,
+    .#{$namespace}-checkbox__input {
+      cursor: not-allowed;
+    }
+
     &.is-checked {
       .#{$namespace}-checkbox__inner {
         background-color: #5d99d6;

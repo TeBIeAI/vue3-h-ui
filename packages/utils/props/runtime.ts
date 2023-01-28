@@ -1,1 +1,5 @@
+import type { PropType } from 'vue'
+
 export const buildProps = () => {}
+
+export const definePropType = <T>(val: any): PropType<T> => val
