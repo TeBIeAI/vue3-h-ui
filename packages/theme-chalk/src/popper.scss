@@ -1,0 +1,14 @@
+@use 'common/var.scss' as *;
+@use 'mixins/mixins' as *;
+@use 'mixins/config' as *;
+
+@include b(popper) {
+  position: absolute;
+  padding: 5px 11px;
+  z-index: 2000;
+  font-size: 12px;
+  line-height: 20px;
+  min-width: 10px;
+  word-wrap: break-word;
+  visibility: visible;
+}

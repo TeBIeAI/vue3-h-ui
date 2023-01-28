@@ -1,13 +1,26 @@
-import { defineComponent, Fragment } from 'vue'
+import {
+  cloneVNode,
+  defineComponent,
+  Fragment,
+  inject,
+  withDirectives
+} from 'vue'
 import type { VNode } from 'vue'
 import { createNameSpace, isObject } from '@h-ui/utils'
+import { FORWARD_REF_INJECTION_KEY, useForwardRefDirective } from '@h-ui/hooks'
+import { NOOP } from '@vue/shared'
 
 const NAME = 'HOnlyChild'
 
 export const OnlyChild = defineComponent({
   name: NAME,
-  setup(props, { slots, attrs }) {
+  setup(_, { slots, attrs }) {
     return () => {
+      const forwardRefInjection = inject(FORWARD_REF_INJECTION_KEY)
+      const forwardRefDirective = useForwardRefDirective(
+        forwardRefInjection?.setForwardRef ?? NOOP
+      )
+
       const defaultSlot = slots.default?.(attrs)
       if (!defaultSlot) return null
 
@@ -20,6 +33,9 @@ export const OnlyChild = defineComponent({
       if (!firstLegitNode) {
         console.warn(NAME, 'no valid child node found')
       }
+      return withDirectives(cloneVNode(firstLegitNode!, attrs), [
+        [forwardRefDirective]
+      ])
     }
   }
 })
@@ -48,6 +64,7 @@ const findFirstLegitChild = (node: VNode[] | undefined): VNode | null => {
 }
 
 function wrapTextContent(s: string | VNode) {
+  debugger
   const ns = createNameSpace('only-child')
   return <span class={ns.e('content')}>{s}</span>
 }

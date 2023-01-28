@@ -7,6 +7,7 @@ import { defineComponent, provide, ref } from 'vue'
 import { popperProps } from './popper'
 import type { Instance as PopperInstance } from '@popperjs/core'
 import { POPPER_INJECTION_KEY } from '@h-ui/tokens'
+import { createNameSpace } from '@h-ui/utils'
 
 const props = defineProps(popperProps)
 

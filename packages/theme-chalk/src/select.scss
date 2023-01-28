@@ -1,0 +1,15 @@
+@use 'common/var.scss' as *;
+@use 'mixins/mixins' as *;
+@use 'mixins/config' as *;
+
+@include b(select) {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+
+  @include e(popper) {
+    background: var(--h-bg-color-overlay);
+    border: 1px solid var(--h-border-color-light);
+    box-shadow: var(--h-box-shadow-light);
+  }
+}
