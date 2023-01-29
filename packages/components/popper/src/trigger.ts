@@ -5,7 +5,7 @@ import { definePropType } from '@h-ui/utils'
 export const popperTriggerProps = {
   virtualRef: definePropType<Measurable>(Object),
   virtualTriggering: Boolean,
-  onClick: {
+  click: {
     type: definePropType<(e: Event) => void>(Function)
   },
   id: String,

@@ -16,7 +16,7 @@
 <script lang="ts" setup>
 import { HPopperContent } from '@h-ui/components/popper'
 import { TOOLTIP_INJECTION_KEY } from '@h-ui/tokens'
-import { computed, inject, unref } from 'vue'
+import { computed, defineComponent, inject, unref } from 'vue'
 import { useTooltipContentProps } from './content'
 
 const props = defineProps(useTooltipContentProps)
@@ -32,7 +32,7 @@ const shouldShow = computed(() => {
 })
 
 const appendTo = computed(() => {
-  return props.appendTo || '#body'
+  return props.appendTo || 'body'
 })
 
 const onAfterShow = () => {
@@ -40,4 +40,8 @@ const onAfterShow = () => {
 }
 </script>
 
-<style scoped></style>
+<script lang="ts">
+export default defineComponent({
+  name: 'HTooltipContent'
+})
+</script>

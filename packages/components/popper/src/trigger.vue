@@ -5,11 +5,17 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, inject, useAttrs } from 'vue'
 import { HOnlyChild } from '@h-ui/components/slot'
 import { popperTriggerProps } from './trigger'
+import { useForwardRef } from '@h-ui/hooks'
+import { POPPER_INJECTION_KEY } from '@h-ui/tokens'
 
 const props = defineProps(popperTriggerProps)
+
+const { triggerRef } = inject(POPPER_INJECTION_KEY)!
+
+useForwardRef(triggerRef)
 </script>
 
 <script lang="ts">

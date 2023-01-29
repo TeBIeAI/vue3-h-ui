@@ -1,5 +1,7 @@
 <template>
-  <div :class="contentCls">popper-content</div>
+  <div :class="contentCls">
+    <slot />
+  </div>
 </template>
 
 <script lang="ts" setup>

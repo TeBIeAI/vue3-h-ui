@@ -33,6 +33,7 @@ export const OnlyChild = defineComponent({
       if (!firstLegitNode) {
         console.warn(NAME, 'no valid child node found')
       }
+
       return withDirectives(cloneVNode(firstLegitNode!, attrs), [
         [forwardRefDirective]
       ])

@@ -12,26 +12,55 @@
 <script setup lang="ts">
 import HPopper from '@h-ui/components/popper'
 import { TOOLTIP_INJECTION_KEY } from '@h-ui/tokens'
-import { computed, provide, readonly, ref } from 'vue'
-import { useTooltipProps } from './tooltip'
+import { computed, provide, readonly, ref, defineComponent, unref } from 'vue'
+import { useTooltipModalToggle, useTooltipProps } from './tooltip'
 import HTooltipTrigger from './trigger.vue'
 import HTooltipContent from './content.vue'
 import { isBoolean } from '@h-ui/utils'
+import { useDelayedToggle } from '@h-ui/hooks'
 
 const popperRef = ref<any>()
 
 const props = defineProps(useTooltipProps)
 
 const open = ref(false)
+const toggleReason = ref<Event>()
+
+const { hide, show } = useTooltipModalToggle({
+  indicator: open,
+  toggleReason
+})
+
+const { onOpen, onClose } = useDelayedToggle({
+  open: show,
+  close: hide
+})
 
 const controlled = computed(() => isBoolean(props.visible))
 
 provide(TOOLTIP_INJECTION_KEY, {
   controlled,
   open: readonly(open),
-  onOpen: (event?: Event) => {},
-  onClose: (event?: Event) => {},
+  onOpen: (event?: Event) => {
+    onOpen()
+  },
+  onClose: (event?: Event) => {
+    onClose
+  },
+  onToggle: () => {
+    if (unref(open)) {
+      onClose()
+    } else {
+      onOpen()
+    }
+  },
   onShow: () => {},
   onHide: () => {}
+})
+</script>
+
+<script lang="ts">
+export default defineComponent({
+  name: 'HTooltip'
 })
 </script>
