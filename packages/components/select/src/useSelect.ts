@@ -41,10 +41,14 @@ export const useSelect = (
   }
 
   const handleBlur = (event: FocusEvent) => {
-    nextTick(() => {
-      ctx.emit('blur')
-    })
-    state.softFocus = false
+    // nextTick(() => {
+    //   ctx.emit('blur')
+    // })
+    // state.softFocus = false
+  }
+
+  const toggleMenu = () => {
+    state.visible = !state.visible
   }
 
   const dropMenuVisible = computed({
@@ -61,6 +65,7 @@ export const useSelect = (
     tooltipRef,
     dropMenuVisible,
     handleFocus,
-    handleBlur
+    handleBlur,
+    toggleMenu
   }
 }

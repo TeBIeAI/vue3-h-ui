@@ -1,13 +1,9 @@
 <template>
-  <div ref="selectWrapper" :class="wrapperCls">
-    <h-tooltip
-      ref="tooltipRef"
-      :popper-class="[nsSelect.e('popper')]"
-      :visible="dropMenuVisible"
-    >
+  <div ref="selectWrapper" :class="wrapperCls" @click.stop="toggleMenu">
+    <h-tooltip ref="tooltipRef" :popper-class="[nsSelect.e('popper')]">
       <template #default>
         <div class="select-trigger">
-          <h-input @focus="handleFocus" @blur="handleBlur"></h-input>
+          <h-input></h-input>
         </div>
       </template>
     </h-tooltip>
@@ -31,8 +27,14 @@ const nsSelect = createNameSpace('select')
 const states = useSelectStates(props)
 const ctx = getCurrentInstance()
 
-const { selectWrapper, tooltipRef, dropMenuVisible, handleFocus, handleBlur } =
-  useSelect(props, states, ctx!)
+const {
+  selectWrapper,
+  tooltipRef,
+  dropMenuVisible,
+  handleFocus,
+  handleBlur,
+  toggleMenu
+} = useSelect(props, states, ctx!)
 
 const wrapperCls = computed(() => [
   nsSelect.b(),
