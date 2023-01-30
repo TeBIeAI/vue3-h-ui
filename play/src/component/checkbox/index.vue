@@ -13,7 +13,5 @@ import { defineComponent, ref } from 'vue'
 
 const checkList = ref(['selected and disabled', 'Option A'])
 
-const change = (val) => {
-  debugger
-}
+const change = (val) => {}
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <h-tooltip class="nihao">
+  <h-tooltip content="我很好">
     <span>你好啊</span>
   </h-tooltip>
 </template>

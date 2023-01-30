@@ -21,8 +21,6 @@ export const OnlyChild = defineComponent({
     )
 
     return () => {
-      debugger
-
       const defaultSlot = slots.default?.(attrs)
       if (!defaultSlot) return null
 
@@ -66,7 +64,6 @@ const findFirstLegitChild = (node: VNode[] | undefined): VNode | null => {
 }
 
 function wrapTextContent(s: string | VNode) {
-  debugger
   const ns = createNameSpace('only-child')
   return <span class={ns.e('content')}>{s}</span>
 }

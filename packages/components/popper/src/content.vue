@@ -17,7 +17,6 @@ import {
   watch
 } from 'vue'
 import { popperContentProps } from './content'
-debugger
 const props = defineProps(popperContentProps)
 
 const ns = createNameSpace('popper')
@@ -40,14 +39,11 @@ const computedReference = computed(() => {
 let updateHandle
 onMounted(() => {
   debugger
-  watch(
-    () => computedReference.value,
-    (referenceEl) => {
-      debugger
-      console.log(referenceEl)
-      debugger
-    }
-  )
+  watch(computedReference, (referenceEl) => {
+    debugger
+    console.log(referenceEl)
+    debugger
+  })
 })
 </script>
 

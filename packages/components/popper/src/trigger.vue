@@ -18,10 +18,11 @@ const { triggerRef } = inject(POPPER_INJECTION_KEY)!
 useForwardRef(triggerRef)
 
 onMounted(() => {
-  watch(
-    () => triggerRef,
-    () => {}
-  )
+  debugger
+  console.log(triggerRef)
+  watch(triggerRef, () => {
+    debugger
+  })
 })
 
 defineExpose({

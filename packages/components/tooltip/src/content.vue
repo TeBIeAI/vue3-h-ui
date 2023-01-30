@@ -4,6 +4,7 @@
       <h-popper-content
         ref="contentRef"
         v-show="shouldShow"
+        v-bind="$attrs"
         :visible="shouldShow"
         v-if="shouldRender"
         :popper-class="popperClass"
