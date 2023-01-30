@@ -9,5 +9,13 @@ export const useTooltipContentProps = {
   visible: {
     type: definePropType<boolean | null>(Boolean),
     default: null
+  },
+  rawContent: {
+    type: Boolean,
+    default: false
+  },
+  content: {
+    type: String,
+    default: ''
   }
 }

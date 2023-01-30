@@ -24,12 +24,15 @@ export const useForwardRefDirective = (
 ): ObjectDirective => {
   return {
     mounted(el) {
+      debugger
       setForwardRef(el)
     },
     updated(el) {
+      debugger
       setForwardRef(el)
     },
     unmounted() {
+      debugger
       setForwardRef(null)
     }
   }

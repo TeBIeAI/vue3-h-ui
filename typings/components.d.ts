@@ -10,7 +10,7 @@ declare module 'vue' {
     HSelect: typeof import('../packages/components/select')['HSelect']
     HOption: typeof import('../packages/components/select')['HOption']
     HTooltip: typeof import('../packages/components/tooltip')['HTooltip']
-    // HPopper: typeof import('../packages/components/popper')['HPopper']
+    HPopper: typeof import('../packages/components/popper')['HPopper']
   }
 }
 

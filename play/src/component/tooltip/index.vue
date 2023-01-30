@@ -1,5 +1,5 @@
 <template>
-  <h-tooltip>
+  <h-tooltip content="你好啊">
     <span>top-ss</span>
   </h-tooltip>
 </template>

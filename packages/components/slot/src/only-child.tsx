@@ -15,11 +15,13 @@ const NAME = 'HOnlyChild'
 export const OnlyChild = defineComponent({
   name: NAME,
   setup(_, { slots, attrs }) {
+    const forwardRefInjection = inject(FORWARD_REF_INJECTION_KEY)
+    const forwardRefDirective = useForwardRefDirective(
+      forwardRefInjection?.setForwardRef ?? NOOP
+    )
+
     return () => {
-      const forwardRefInjection = inject(FORWARD_REF_INJECTION_KEY)
-      const forwardRefDirective = useForwardRefDirective(
-        forwardRefInjection?.setForwardRef ?? NOOP
-      )
+      debugger
 
       const defaultSlot = slots.default?.(attrs)
       if (!defaultSlot) return null
@@ -33,7 +35,6 @@ export const OnlyChild = defineComponent({
       if (!firstLegitNode) {
         console.warn(NAME, 'no valid child node found')
       }
-
       return withDirectives(cloneVNode(firstLegitNode!, attrs), [
         [forwardRefDirective]
       ])

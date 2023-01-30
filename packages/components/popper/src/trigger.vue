@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent, inject, useAttrs } from 'vue'
+import { defineComponent, inject, onMounted, useAttrs, watch } from 'vue'
 import { HOnlyChild } from '@h-ui/components/slot'
 import { popperTriggerProps } from './trigger'
 import { useForwardRef } from '@h-ui/hooks'
@@ -16,6 +16,20 @@ const props = defineProps(popperTriggerProps)
 const { triggerRef } = inject(POPPER_INJECTION_KEY)!
 
 useForwardRef(triggerRef)
+
+onMounted(() => {
+  watch(
+    () => triggerRef,
+    () => {}
+  )
+})
+
+defineExpose({
+  /**
+   * @description trigger element
+   */
+  triggerRef
+})
 </script>
 
 <script lang="ts">

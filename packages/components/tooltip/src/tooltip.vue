@@ -4,7 +4,10 @@
       <slot v-if="$slots.default" />
     </h-tooltip-trigger>
     <h-tooltip-content :popper-class="popperClass">
-      <slot name="content"></slot>
+      <slot name="content">
+        <span v-if="rawContent" v-html="content"></span>
+        <span v-else>{{ content }}</span>
+      </slot>
     </h-tooltip-content>
   </h-popper>
 </template>
@@ -45,7 +48,7 @@ provide(TOOLTIP_INJECTION_KEY, {
     onOpen()
   },
   onClose: (event?: Event) => {
-    onClose
+    onClose()
   },
   onToggle: () => {
     if (unref(open)) {

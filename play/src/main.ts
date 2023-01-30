@@ -10,7 +10,8 @@ import {
   HIcon,
   HSelect,
   HOption,
-  HTooltip
+  HTooltip,
+  HPopper
 } from '@h-ui/components'
 
 const app = createApp(App)
@@ -25,5 +26,6 @@ app.use(HIcon)
 app.use(HSelect)
 app.use(HOption)
 app.use(HTooltip)
+app.use(HPopper)
 
 app.mount('#app')

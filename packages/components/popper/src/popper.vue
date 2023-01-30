@@ -26,6 +26,7 @@ provide(POPPER_INJECTION_KEY, popperProvieds)
 
 <script lang="ts">
 export default defineComponent({
-  name: 'HPopper'
+  name: 'HPopper',
+  inheritAttrs: false
 })
 </script>
