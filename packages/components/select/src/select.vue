@@ -7,7 +7,9 @@
         </div>
       </template>
       <template #content>
-        <slot />
+        <h-scrollbar>
+          <slot />
+        </h-scrollbar>
       </template>
     </h-tooltip>
   </div>
@@ -20,6 +22,7 @@ import { selectEmits, selectProps } from './select'
 import { useSelect, useSelectStates } from './useSelect'
 import { HInput } from '@h-ui/components'
 import HTooltip from '@h-ui/components/tooltip'
+import HScrollbar from '@h-ui/components/scrollbar'
 
 const props = defineProps(selectProps)
 const emit = defineEmits(selectEmits)
