@@ -3,17 +3,24 @@
     <h-tooltip-trigger :trigger="trigger">
       <slot v-if="$slots.default" />
     </h-tooltip-trigger>
-    <h-tooltip-content :popper-class="popperClass">
+    <h-tooltip-content
+      ref="contentRef"
+      :popper-class="popperClass"
+      v-bind="$attrs"
+      :placement="placement"
+      :effect="effect"
+    >
       <slot name="content">
         <span v-if="rawContent" v-html="content"></span>
         <span v-else>{{ content }}</span>
       </slot>
+      <h-popper-arrow v-if="showArrow" :arrow-offset="arrowOffset" />
     </h-tooltip-content>
   </h-popper>
 </template>
 
 <script setup lang="ts">
-import HPopper from '@h-ui/components/popper'
+import { HPopper, HPopperArrow } from '@h-ui/components/popper'
 import { TOOLTIP_INJECTION_KEY } from '@h-ui/tokens'
 import { computed, provide, readonly, ref, defineComponent, unref } from 'vue'
 import { useTooltipModalToggle, useTooltipProps } from './tooltip'
@@ -28,6 +35,7 @@ const props = defineProps(useTooltipProps)
 
 const open = ref(false)
 const toggleReason = ref<Event>()
+const contentRef = ref<any>(null)
 
 const { hide, show } = useTooltipModalToggle({
   indicator: open,

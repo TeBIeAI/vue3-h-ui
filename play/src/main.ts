@@ -11,7 +11,8 @@ import {
   HSelect,
   HOption,
   HTooltip,
-  HPopper
+  HPopper,
+  HScrollbar
 } from '@h-ui/components'
 
 const app = createApp(App)
@@ -27,5 +28,6 @@ app.use(HSelect)
 app.use(HOption)
 app.use(HTooltip)
 app.use(HPopper)
+app.use(HScrollbar)
 
 app.mount('#app')

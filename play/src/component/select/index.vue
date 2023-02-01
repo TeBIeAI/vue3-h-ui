@@ -1,11 +1,11 @@
 <template>
   <h-select v-model="value" disabled placeholder="Select" size="small">
-    <!-- <h-option
+    <h-option
       v-for="item in options"
       :key="item.value"
       :label="item.label"
       :value="item.value"
-    /> -->
+    />
   </h-select>
 </template>
 

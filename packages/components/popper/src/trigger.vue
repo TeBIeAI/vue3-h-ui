@@ -1,28 +1,134 @@
 <template>
-  <h-only-child v-bind="$attrs">
+  <h-only-child
+    v-if="!virtualTriggering"
+    v-bind="$attrs"
+    :aria-controls="ariaControls"
+    :aria-describedby="ariaDescribedby"
+    :aria-expanded="ariaExpanded"
+    :aria-haspopup="ariaHaspopup"
+  >
     <slot />
   </h-only-child>
 </template>
 
-<script setup lang="ts">
-import { defineComponent, inject, onMounted, useAttrs, watch } from 'vue'
+<script lang="ts" setup>
+import { computed, inject, onBeforeUnmount, onMounted, watch } from 'vue'
+import { isNil } from 'lodash-es'
+import { unrefElement } from '@vueuse/core'
 import { HOnlyChild } from '@h-ui/components/slot'
-import { popperTriggerProps } from './trigger'
 import { useForwardRef } from '@h-ui/hooks'
 import { POPPER_INJECTION_KEY } from '@h-ui/tokens'
+import { isElement } from '@h-ui/utils'
+import { popperTriggerProps } from './trigger'
+
+import type { WatchStopHandle } from 'vue'
 
 const props = defineProps(popperTriggerProps)
 
-const { triggerRef } = inject(POPPER_INJECTION_KEY)!
+const { role, triggerRef } = inject(POPPER_INJECTION_KEY, undefined)!
 
 useForwardRef(triggerRef)
+const ariaControls = computed<string | undefined>(() => {
+  return ariaHaspopup.value ? props.id : undefined
+})
+
+const ariaDescribedby = computed<string | undefined>(() => {
+  if (role && role.value === 'tooltip') {
+    return props.open && props.id ? props.id : undefined
+  }
+  return undefined
+})
+
+const ariaHaspopup = computed<string | undefined>(() => {
+  if (role && role.value !== 'tooltip') {
+    return role.value
+  }
+  return undefined
+})
+
+const ariaExpanded = computed<string | undefined>(() => {
+  return ariaHaspopup.value ? `${props.open}` : undefined
+})
+
+let virtualTriggerAriaStopWatch: WatchStopHandle | undefined = undefined
 
 onMounted(() => {
-  debugger
-  console.log(triggerRef)
-  watch(triggerRef, () => {
-    debugger
-  })
+  watch(
+    () => props.virtualRef,
+    (virtualEl) => {
+      if (virtualEl) {
+        triggerRef.value = unrefElement(virtualEl as HTMLElement)
+      }
+    },
+    {
+      immediate: true
+    }
+  )
+
+  watch(
+    triggerRef,
+    (el, prevEl) => {
+      virtualTriggerAriaStopWatch?.()
+      virtualTriggerAriaStopWatch = undefined
+      if (isElement(el)) {
+        ;(
+          [
+            'onMouseenter',
+            'onMouseleave',
+            'onClick',
+            'onKeydown',
+            'onFocus',
+            'onBlur',
+            'onContextmenu'
+          ] as const
+        ).forEach((eventName) => {
+          const handler = props[eventName]
+          if (handler) {
+            ;(el as HTMLElement).addEventListener(
+              eventName.slice(2).toLowerCase(),
+              handler
+            )
+            ;(prevEl as HTMLElement)?.removeEventListener?.(
+              eventName.slice(2).toLowerCase(),
+              handler
+            )
+          }
+        })
+        virtualTriggerAriaStopWatch = watch(
+          [ariaControls, ariaDescribedby, ariaHaspopup, ariaExpanded],
+          (watches) => {
+            ;[
+              'aria-controls',
+              'aria-describedby',
+              'aria-haspopup',
+              'aria-expanded'
+            ].forEach((key, idx) => {
+              isNil(watches[idx])
+                ? el.removeAttribute(key)
+                : el.setAttribute(key, watches[idx]!)
+            })
+          },
+          { immediate: true }
+        )
+      }
+      if (isElement(prevEl)) {
+        ;[
+          'aria-controls',
+          'aria-describedby',
+          'aria-haspopup',
+          'aria-expanded'
+        ].forEach((key) => prevEl.removeAttribute(key))
+      }
+    },
+    {
+      immediate: true
+    }
+  )
+})
+
+onBeforeUnmount(() => {
+  virtualTriggerAriaStopWatch?.()
+  virtualTriggerAriaStopWatch = undefined
 })
 
 defineExpose({
@@ -30,11 +136,5 @@ defineExpose({
    * @description trigger element
    */
   triggerRef
-})
-</script>
-
-<script lang="ts">
-export default defineComponent({
-  name: 'HPopperTriiger'
 })
 </script>

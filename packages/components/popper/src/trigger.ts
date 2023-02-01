@@ -1,15 +1,43 @@
-import { ExtractPropTypes } from 'vue'
-import { Measurable } from '@h-ui/tokens'
+import type { Measurable } from '@h-ui/tokens'
 import { definePropType } from '@h-ui/utils'
+import type Trigger from './trigger.vue'
 
 export const popperTriggerProps = {
-  virtualRef: definePropType<Measurable>(Object),
+  virtualRef: {
+    type: definePropType<Measurable>(Object)
+  },
   virtualTriggering: Boolean,
-  click: {
+  onMouseenter: {
+    type: definePropType<(e: Event) => void>(Function)
+  },
+  onMouseleave: {
+    type: definePropType<(e: Event) => void>(Function)
+  },
+  onClick: {
+    type: definePropType<(e: Event) => void>(Function)
+  },
+  onKeydown: {
+    type: definePropType<(e: Event) => void>(Function)
+  },
+  onFocus: {
+    type: definePropType<(e: Event) => void>(Function)
+  },
+  onBlur: {
+    type: definePropType<(e: Event) => void>(Function)
+  },
+  onContextmenu: {
     type: definePropType<(e: Event) => void>(Function)
   },
   id: String,
   open: Boolean
-} as const
+}
 
-export type PopperTriggerProps = ExtractPropTypes<typeof popperTriggerProps>
+export type PopperTriggerProps = typeof popperTriggerProps
+
+export type PopperTriggerInstance = InstanceType<typeof Trigger>
+
+/** @deprecated use `popperTriggerProps` instead, and it will be deprecated in the next major version */
+export const usePopperTriggerProps = popperTriggerProps
+
+/** @deprecated use `PopperTriggerInstance` instead, and it will be deprecated in the next major version */
+export type ElPopperArrowTrigger = PopperTriggerInstance

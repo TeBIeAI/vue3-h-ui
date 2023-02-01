@@ -6,6 +6,9 @@
           <h-input></h-input>
         </div>
       </template>
+      <template #content>
+        <slot />
+      </template>
     </h-tooltip>
   </div>
 </template>

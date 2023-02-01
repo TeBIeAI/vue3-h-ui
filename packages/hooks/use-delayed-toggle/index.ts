@@ -6,7 +6,6 @@ export type UseDelayedToggleProps = {
 export const useDelayedToggle = ({ open, close }: UseDelayedToggleProps) => {
   const onOpen = () => {
     setTimeout(() => {
-      debugger
       open()
     }, 0)
   }

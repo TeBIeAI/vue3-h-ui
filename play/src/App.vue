@@ -1,9 +1,10 @@
 <template>
-  <CPopper />
+  <Cscrollbar />
 </template>
 
 <script setup lang="ts">
-import CPopper from './component/popper/index.vue'
+import Cscrollbar from './component/scrollbar/index.vue'
+// import CPopper from './component/popper/index.vue'
 // import Ctooltip from './component/tooltip/index.vue'
 // import CSelect from './component/select/index.vue'
 // import Input1 from './component/input/index.vue'

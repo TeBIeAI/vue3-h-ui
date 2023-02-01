@@ -11,6 +11,7 @@ declare module 'vue' {
     HOption: typeof import('../packages/components/select')['HOption']
     HTooltip: typeof import('../packages/components/tooltip')['HTooltip']
     HPopper: typeof import('../packages/components/popper')['HPopper']
+    HScrollbar: typeof import('../packages/components/scrollbar')['HScrollbar']
   }
 }
 
