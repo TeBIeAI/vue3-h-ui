@@ -11,6 +11,10 @@
  * :class=[bem].b('button)
  */
 
+import { computed, inject, InjectionKey, ref, Ref, unref } from 'vue'
+
+export const defaultNamespace = 'h'
+
 function _bem(
   nameSpace: string,
   prefixName: string,
@@ -80,3 +84,17 @@ const ns = createNameSpace('button')
 console.log(ns.m('content'))
 // console.log(bem.em("primary", "aaa"));
 // console.log(bem.is("disabled", 11));
+
+export const namespaceContextKey: InjectionKey<Ref<string | undefined>> =
+  Symbol('namespaceContextKey')
+
+export const useGetDerivedNamespace = (
+  namespaceOverrides?: Ref<string | undefined>
+) => {
+  const derivedNamespace =
+    namespaceOverrides || inject(namespaceContextKey, ref(defaultNamespace))
+  const namespace = computed(() => {
+    return unref(derivedNamespace) || defaultNamespace
+  })
+  return namespace
+}

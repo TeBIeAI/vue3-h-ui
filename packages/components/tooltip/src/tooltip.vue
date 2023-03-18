@@ -1,75 +1,80 @@
 <template>
-  <h-popper ref="popperRef" :role="role">
-    <h-tooltip-trigger :trigger="trigger">
+  <hl-popper :role="role" ref="popperRef">
+    <h-tooltip-trigger
+      :disabled="disabled"
+      :trigger="trigger"
+      :virtual-ref="virtualRef"
+    >
       <slot v-if="$slots.default" />
     </h-tooltip-trigger>
-    <h-tooltip-content
-      ref="contentRef"
-      :popper-class="popperClass"
-      v-bind="$attrs"
-      :placement="placement"
-      :effect="effect"
-    >
+    <h-tooltip-content :content="content">
       <slot name="content">
-        <span v-if="rawContent" v-html="content"></span>
-        <span v-else>{{ content }}</span>
+        <span>{{ content }}</span>
       </slot>
-      <h-popper-arrow v-if="showArrow" :arrow-offset="arrowOffset" />
     </h-tooltip-content>
-  </h-popper>
+  </hl-popper>
 </template>
 
-<script setup lang="ts">
-import { HPopper, HPopperArrow } from '@h-ui/components/popper'
+<script lang="ts" setup>
+import { computed, defineComponent, provide, readonly, ref, unref } from 'vue'
+import { HlPopper, PopperInstance } from '@h-ui/components'
+import { tooltipEmits, useTooltipModelToggle, useTooltipProps } from './tooltip'
 import { TOOLTIP_INJECTION_KEY } from '@h-ui/tokens'
-import { computed, provide, readonly, ref, defineComponent, unref } from 'vue'
-import { useTooltipModalToggle, useTooltipProps } from './tooltip'
+import { isBoolean } from '@h-ui/utils'
 import HTooltipTrigger from './trigger.vue'
 import HTooltipContent from './content.vue'
-import { isBoolean } from '@h-ui/utils'
-import { useDelayedToggle } from '@h-ui/hooks'
-
-const popperRef = ref<any>()
+import { useId, usePopperContainer } from '@h-ui/hooks'
 
 const props = defineProps(useTooltipProps)
+const emit = defineEmits(tooltipEmits)
+
+usePopperContainer()
+const id = useId()
+debugger
+const popperRef = ref<PopperInstance>()
 
 const open = ref(false)
 const toggleReason = ref<Event>()
-const contentRef = ref<any>(null)
 
-const { hide, show } = useTooltipModalToggle({
+const { show, hasUpdateHandler } = useTooltipModelToggle({
   indicator: open,
   toggleReason
 })
 
-const { onOpen, onClose } = useDelayedToggle({
-  open: show,
-  close: hide
+const controlled = computed(() => isBoolean(props.visible))
+
+const shouldRender = computed(() => {
+  return unref(open)
 })
 
-const controlled = computed(() => isBoolean(props.visible))
+const shouldShow = computed(() => {
+  return props.disabled ? false : unref(open)
+})
 
 provide(TOOLTIP_INJECTION_KEY, {
   controlled,
   open: readonly(open),
   onOpen: (event?: Event) => {
-    onOpen()
+    setTimeout(() => {
+      show()
+    })
   },
-  onClose: (event?: Event) => {
-    onClose()
-  },
-  onToggle: () => {
+  onClose: () => {},
+  onToggle: (event?: Event) => {
     if (unref(open)) {
-      onClose()
+      debugger
     } else {
-      onOpen()
+      setTimeout(() => {
+        show(event)
+      })
     }
   },
-  onShow: () => {},
+  onShow: () => {
+    emit('show', toggleReason.value)
+  },
   onHide: () => {}
 })
 </script>
-
 <script lang="ts">
 export default defineComponent({
   name: 'HTooltip'

@@ -1,19 +1,17 @@
+import { FORWARD_REF_INJECTION_KEY, useForwardRefDirective } from '@h-ui/hooks'
+import { createNameSpace, isObject } from '@h-ui/utils'
+import { NOOP } from '@vue/shared'
+import type { VNode, Ref } from 'vue'
 import {
   cloneVNode,
   defineComponent,
-  Fragment,
   inject,
-  withDirectives
+  withDirectives,
+  Fragment
 } from 'vue'
-import type { VNode } from 'vue'
-import { createNameSpace, isObject } from '@h-ui/utils'
-import { FORWARD_REF_INJECTION_KEY, useForwardRefDirective } from '@h-ui/hooks'
-import { NOOP } from '@vue/shared'
-
-const NAME = 'HOnlyChild'
 
 export const OnlyChild = defineComponent({
-  name: NAME,
+  name: 'HlOnlyChild',
   setup(_, { slots, attrs }) {
     const forwardRefInjection = inject(FORWARD_REF_INJECTION_KEY)
     const forwardRefDirective = useForwardRefDirective(
@@ -25,14 +23,16 @@ export const OnlyChild = defineComponent({
       if (!defaultSlot) return null
 
       if (defaultSlot.length > 1) {
-        console.warn(NAME, 'requires exact only one valid child.')
-        return
+        console.warn('HlOnlyChild', 'requires exact only one valid child.')
+        return null
       }
 
       const firstLegitNode = findFirstLegitChild(defaultSlot)
       if (!firstLegitNode) {
-        console.warn(NAME, 'no valid child node found')
+        console.warn('HlOnlyChild', 'no valid child node found')
+        return null
       }
+
       return withDirectives(cloneVNode(firstLegitNode!, attrs), [
         [forwardRefDirective]
       ])
@@ -40,11 +40,15 @@ export const OnlyChild = defineComponent({
   }
 })
 
-const findFirstLegitChild = (node: VNode[] | undefined): VNode | null => {
+function findFirstLegitChild(node: VNode[] | undefined): VNode | null {
   if (!node) return null
-  const children = node
-
+  const children = node as VNode[]
   for (const child of children) {
+    /**
+     * when user uses h(Fragment, [text]) to render plain string,
+     * this switch case just cannot handle, when the value is primitives
+     * we should just return the wrapped string
+     */
     if (isObject(child)) {
       switch (child.type) {
         case Comment:
@@ -66,4 +70,8 @@ const findFirstLegitChild = (node: VNode[] | undefined): VNode | null => {
 function wrapTextContent(s: string | VNode) {
   const ns = createNameSpace('only-child')
   return <span class={ns.e('content')}>{s}</span>
+}
+
+export type OnlyChildExpose = {
+  forwardRef: Ref<HTMLElement>
 }

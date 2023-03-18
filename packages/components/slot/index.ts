@@ -1,1 +1,1 @@
-export { OnlyChild as HOnlyChild } from './src/only-child'
+export { OnlyChild as HlOnlyChild } from './src/only-child'

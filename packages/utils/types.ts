@@ -33,3 +33,7 @@ export const isStringNumber = (val: string): boolean => {
   }
   return !Number.isNaN(Number(val))
 }
+
+export type Arrayable<T> = T | T[]
+
+export { hasOwn } from '@vue/shared'

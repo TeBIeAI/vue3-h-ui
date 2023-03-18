@@ -1,17 +1,17 @@
-import { definePropType } from '@h-ui/utils'
-import type { ExtractPropTypes } from 'vue'
-import { popperTriggerProps } from '@h-ui/components/popper'
+import { ExtractPropTypes } from 'vue'
+import { usePopperTriggerProps } from '@h-ui/components/popper/src/trigger'
+import { Arrayable, buildProps, definePropType } from '@h-ui/utils'
 
-export type TooltipTriggerType = 'hover' | 'focus' | 'click'
+export type TooltipTriggerType = 'hover' | 'focus' | 'click' | 'contextmenu'
 
-export const useTooltipTriggerProps = {
-  ...popperTriggerProps,
+export const useTooltipTriggerProps = buildProps({
+  ...usePopperTriggerProps,
+  disabled: Boolean,
   trigger: {
-    type: definePropType<TooltipTriggerType[]>([String, Array]),
-    default: 'hover'
+    type: definePropType<Arrayable<TooltipTriggerType>>([String, Array])
   }
-}
+} as const)
 
-export type HTooltipTriggerProps = ExtractPropTypes<
+export type HlTooltipTriggerProps = ExtractPropTypes<
   typeof useTooltipTriggerProps
 >

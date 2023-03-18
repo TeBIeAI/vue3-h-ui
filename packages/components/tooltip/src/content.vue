@@ -1,70 +1,53 @@
 <template>
   <teleport :to="appendTo">
-    <transition @after-enter="onAfterShow">
-      <h-popper-content
-        ref="contentRef"
-        v-show="shouldShow"
-        v-bind="$attrs"
-        :visible="shouldShow"
-        v-if="shouldRender"
-        :popper-class="popperClass"
-        :placement="placement"
-      >
-        <slot />
-      </h-popper-content>
-    </transition>
+    <h-popper-content
+      v-if="shouldRender"
+      v-show="shouldShow"
+      v-bind="$attrs"
+      ref="contentRef"
+    >
+      <slot />
+    </h-popper-content>
   </teleport>
 </template>
 
 <script lang="ts" setup>
-import { HPopperContent } from '@h-ui/components/popper'
 import { TOOLTIP_INJECTION_KEY } from '@h-ui/tokens'
+import { createNameSpace } from '@h-ui/utils'
 import { computed, defineComponent, inject, ref, unref, watch } from 'vue'
 import { useTooltipContentProps } from './content'
-import { onClickOutside } from '@vueuse/core'
+import { HPopperContent } from '@h-ui/components/popper'
+import { usePopperContainerId } from '@h-ui/hooks'
+
 const props = defineProps(useTooltipContentProps)
 
+const { selector } = usePopperContainerId()
+
+const ns = createNameSpace('tooltip')
 const contentRef = ref<any>()
 
-const { open, onShow, controlled, onClose } = inject(TOOLTIP_INJECTION_KEY)!
+const { controlled, open, onOpen, onShow, onHide, onClose, onToggle } = inject(
+  TOOLTIP_INJECTION_KEY,
+  undefined
+)!
 
-const shouldRender = computed(() => {
-  return unref(open)
-})
+const shouldRender = computed(() => unref(open))
 
-const shouldShow = computed(() => {
-  return unref(open)
-})
+const shouldShow = computed(() => (props.disabled ? false : unref(open)))
 
-const appendTo = computed(() => {
-  return props.appendTo || 'body'
-})
-
-let stopHandle: ReturnType<typeof onClickOutside>
-
-const onAfterShow = () => {
-  stopHandle = onClickOutside(
-    computed(() => {
-      return contentRef.value
-    }),
-    () => {
-      onClose()
-    }
-  )
-}
+const appendTo = computed(() => props.appendTo || selector.value)
 
 watch(
-  () => unref(open),
-  (val) => {
-    if (!val) {
-      stopHandle?.()
-    }
+  () => props.content,
+  () => {
+    contentRef.value
   }
 )
 </script>
 
 <script lang="ts">
 export default defineComponent({
-  name: 'HTooltipContent'
+  name: 'HTooltipContent',
+  inheritAttrs: false
 })
 </script>

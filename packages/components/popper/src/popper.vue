@@ -3,12 +3,11 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, defineComponent, provide, ref } from 'vue'
-import { POPPER_INJECTION_KEY } from '@h-ui/tokens'
+import { computed } from '@vue/reactivity'
+import { defineComponent, provide, ref } from 'vue'
 import { popperProps } from './popper'
-
 import type { Instance as PopperInstance } from '@popperjs/core'
-import type { ElPopperInjectionContext } from '@h-ui/tokens'
+import { POPPER_INJECTION_KEY } from './constants';
 
 const props = defineProps(popperProps)
 
@@ -19,35 +18,23 @@ const referenceRef = ref<HTMLElement>()
 const role = computed(() => props.role)
 
 const popperProvides = {
-  /**
-   * @description trigger element
-   */
   triggerRef,
-  /**
-   * @description popperjs instance
-   */
   popperInstanceRef,
-  /**
-   * @description popper content element
-   */
   contentRef,
-  /**
-   * @description popper reference element
-   */
   referenceRef,
-  /**
-   * @description role determines how aria attributes are distributed
-   */
   role
-} as ElPopperInjectionContext
+}
 
 defineExpose(popperProvides)
 
 provide(POPPER_INJECTION_KEY, popperProvides)
+
 </script>
+
 <script lang="ts">
 export default defineComponent({
-  name: 'HPopperRoot',
+  name: 'HlPopper',
   inheritAttrs: false
 })
 </script>
+<style scoped></style>

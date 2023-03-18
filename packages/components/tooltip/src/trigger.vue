@@ -1,32 +1,39 @@
 <template>
-  <h-popper-trigger :class="ns.e('trigger')" :open="open" @click="onClick">
+  <h-popper-trigger
+    :virtual-ref="virtualRef"
+    :open="open"
+    @click="onClick"
+    name="nihao"
+    :class="ns.e('trigger')"
+  >
     <slot />
   </h-popper-trigger>
 </template>
 
-<script setup lang="ts">
-import { createNameSpace } from '@h-ui/utils'
-import { HPopperTrigger } from '@h-ui/components/popper'
-import { useTooltipTriggerProps } from './trigger'
+<script lang="ts" setup>
 import { defineComponent, inject } from 'vue'
+import { HPopperTrigger } from '@h-ui/components/popper'
 import { TOOLTIP_INJECTION_KEY } from '@h-ui/tokens'
+import { createNameSpace } from '@h-ui/utils'
+import { useTooltipTriggerProps } from './trigger'
+
+const ns = createNameSpace('tooltip')
 
 const props = defineProps(useTooltipTriggerProps)
 
-const ns = createNameSpace('tooltip')
-const { open, onOpen, onClose, onToggle } = inject(
+const { controlled, open, onOpen, onShow, onHide, onClose, onToggle } = inject(
   TOOLTIP_INJECTION_KEY,
   undefined
 )!
 
-const onClick = (e: MouseEvent) => {
-  if (e.button === 0) {
-    onToggle(e)
-  }
+const onClick = () => {
+  onToggle()
 }
 </script>
+
 <script lang="ts">
 export default defineComponent({
   name: 'HTooltipTrigger'
 })
 </script>
+<style scoped></style>

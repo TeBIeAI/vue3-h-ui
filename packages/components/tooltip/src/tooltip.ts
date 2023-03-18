@@ -1,22 +1,29 @@
 import { ExtractPropTypes } from 'vue'
 import { popperProps } from '@h-ui/components/popper'
+import { createModelToggleComposable } from '@h-ui/hooks'
+import { buildProps } from '@h-ui/utils'
 import { useTooltipTriggerProps } from './trigger'
 import { useTooltipContentProps } from './content'
-import { createModelToggleComposable } from '@h-ui/hooks'
-import { popperArrowProps } from '@h-ui/components/popper'
 
-export const { useModelToggle: useTooltipModalToggle } =
-  createModelToggleComposable('visible' as const)
+export const {
+  useModelToggle: useTooltipModelToggle,
+  useModelToggleProps: useTooltipModelToggleProps,
+  useModelToggleEmits: useTooltipModelToggleEmits
+} = createModelToggleComposable('visible' as const)
 
-export const useTooltipProps = {
+export const useTooltipProps = buildProps({
   ...popperProps,
+  ...useTooltipModelToggleProps,
   ...useTooltipTriggerProps,
-  ...useTooltipContentProps,
-  ...popperArrowProps,
-  showArrow: {
-    type: Boolean,
-    default: true
-  }
-}
+  ...useTooltipContentProps
+})
 
-export type HTooltipProps = ExtractPropTypes<typeof useTooltipProps>
+export const tooltipEmits = [
+  ...useTooltipModelToggleEmits,
+  'show',
+  'hide',
+  'open',
+  'close'
+]
+
+export type TooltipProps = ExtractPropTypes<typeof useTooltipProps>

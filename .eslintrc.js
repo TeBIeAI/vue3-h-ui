@@ -27,6 +27,7 @@ module.exports = {
   globals: {
     defineProps: 'readonly',
     defineEmits: 'readonly',
+    defineOptions: 'readonly',
     defineOptions: 'readonly'
   },
   // plugins: ['vue', '@typescript-eslint'],

@@ -1,21 +1,17 @@
-import { popperContentProps } from '@h-ui/components/popper'
-import { definePropType } from '@h-ui/utils'
+import { buildProps, definePropType } from '@h-ui/utils'
+import { ExtractPropType } from '@h-ui/utils/props/type'
 
-export const useTooltipContentProps = {
-  ...popperContentProps,
+export const useTooltipContentProps = buildProps({
   appendTo: {
     type: definePropType<string | HTMLElement>([String, Object])
-  },
-  visible: {
-    type: definePropType<boolean | null>(Boolean),
-    default: null
-  },
-  rawContent: {
-    type: Boolean,
-    default: false
   },
   content: {
     type: String,
     default: ''
-  }
-}
+  },
+  disabled: Boolean
+})
+
+export type HTooltipContentProps = ExtractPropType<
+  typeof useTooltipContentProps
+>

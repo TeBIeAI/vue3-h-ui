@@ -7,11 +7,7 @@ declare module 'vue' {
     HCheckboxGroup: typeof import('../packages/components/checkbox')['HCheckboxGroup']
     HInput: typeof import('../packages/components/input')['HInput']
     HIcon: typeof import('../packages/components/icon')['HIcon']
-    HSelect: typeof import('../packages/components/select')['HSelect']
-    HOption: typeof import('../packages/components/select')['HOption']
     HTooltip: typeof import('../packages/components/tooltip')['HTooltip']
-    HPopper: typeof import('../packages/components/popper')['HPopper']
-    HScrollbar: typeof import('../packages/components/scrollbar')['HScrollbar']
   }
 }
 

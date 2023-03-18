@@ -3,6 +3,8 @@
     "lib": ["ESNext", "DOM"],
     "jsx": "preserve" /* Specify what JSX code is generated. */,
     "moduleResolution": "node",
+    "target": "es2018",
+    "module": "esnext",
     "sourceMap": true,
     "removeComments": true /* Disable emitting comments. */,
     "esModuleInterop": true,
